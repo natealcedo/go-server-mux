@@ -18,6 +18,12 @@ func main() {
 		),
 	)
 
+	mux.HandleFunc("POST /",
+		middleware.LoggingMiddleware(
+			handlers.MakeHandler(handlers.HandlePost),
+		),
+	)
+
 	server := &http.Server{
 		Addr:    PORT,
 		Handler: mux,
