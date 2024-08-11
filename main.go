@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/natealcedo/go-server-mux/handlers"
+	"github.com/natealcedo/go-server-mux/middleware"
 	"log/slog"
 	"net/http"
 )
@@ -10,7 +11,12 @@ const PORT = ":3000"
 
 func main() {
 	mux := http.NewServeMux()
-	mux.HandleFunc("GET /", handlers.MakeHandler(handlers.HandleGet))
+
+	mux.HandleFunc("GET /",
+		middleware.LoggingMiddleware(
+			handlers.MakeHandler(handlers.HandleGet),
+		),
+	)
 
 	server := &http.Server{
 		Addr:    PORT,
