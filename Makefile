@@ -1,10 +1,12 @@
-.PHONY: build clean test run install lint fix
-
+.PHONY: build clean fix install lint run start test
 APP_NAME = app
 BIN = bin/$(APP_NAME)
 
 run:
 	@go run main.go
+
+start: build
+	@$(BIN)
 
 install:
 	@go mod tidy
